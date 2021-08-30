@@ -25,7 +25,7 @@ def get_readme():
 if __name__ == '__main__':
 
     setuptools.setup(
-        install_requires=[],  # dependency
+        install_requires=["packaging==21.0"],  # dependency
         python_requires='>=3',
         packages=setuptools.find_packages(include=['test_appimage']),
         name='test_appimage',  # name of the PyPI-package.

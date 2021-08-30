@@ -5,8 +5,10 @@ import urllib.parse
 import urllib.request
 from email.message import Message
 
+from packaging import version
+
 release_url = "https://api.github.com/repos/mario33881/test_appimage/releases/latest"
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 
 
 class Response(typing.NamedTuple):
@@ -91,21 +93,23 @@ def main():
     print("Currently using version ", __version__)
     req = request(release_url)
     json_data = req.json()
-    version = None
+    latest_version = None
 
     if not isinstance(json_data, str):
         for asset in json_data["assets"]:
             if asset["name"] == "version.txt":
                 target_url = asset["browser_download_url"]
                 for line in urllib.request.urlopen(target_url):
-                    version = line.decode('utf-8').strip()
+                    latest_version = line.decode('utf-8').strip()
                     break
                 break
 
-        if version is not None:
-            print("latest version:", version)
-            if version != __version__:
+        if latest_version is not None:
+            print("latest version:", latest_version)
+            if version.parse(latest_version) > version.parse(__version__):
                 print("new update is available")
+            else:
+                print("NO updates available")
     else:
         print("No releases")
 
