@@ -1,4 +1,5 @@
 *.AppImage
+*.zsync
 squashfs-root/
 *.egg-info/
 build/
