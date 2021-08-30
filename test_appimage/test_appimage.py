@@ -1,3 +1,6 @@
+import sys
+import subprocess
+
 import json
 import typing
 import urllib.error
@@ -90,28 +93,40 @@ def request(
 
 
 def main():
-    print("Currently using version ", __version__)
-    req = request(release_url)
-    json_data = req.json()
-    latest_version = None
-
-    if not isinstance(json_data, str):
-        for asset in json_data["assets"]:
-            if asset["name"] == "version.txt":
-                target_url = asset["browser_download_url"]
-                for line in urllib.request.urlopen(target_url):
-                    latest_version = line.decode('utf-8').strip()
-                    break
-                break
-
-        if latest_version is not None:
-            print("latest version:", latest_version)
-            if version.parse(latest_version) > version.parse(__version__):
-                print("new update is available")
-            else:
-                print("NO updates available")
+    args = sys.argv
+    if len(args) == 1:
+        if sys.argv[1] == "--update":
+            print("looking for updates")
+            try:
+                subprocess.Popen(["appimageupdate", "$APPIMAGE"], shell=True)
+            except Exception as e:
+                print("Something went wrong:", e)
+        else:
+            print("Invalid flag: call with --update or no flags")
+            print("> You used these flags: ", args)
     else:
-        print("No releases")
+        print("Currently using version ", __version__)
+        req = request(release_url)
+        json_data = req.json()
+        latest_version = None
+
+        if not isinstance(json_data, str):
+            for asset in json_data["assets"]:
+                if asset["name"] == "version.txt":
+                    target_url = asset["browser_download_url"]
+                    for line in urllib.request.urlopen(target_url):
+                        latest_version = line.decode('utf-8').strip()
+                        break
+                    break
+
+            if latest_version is not None:
+                print("latest version:", latest_version)
+                if version.parse(latest_version) > version.parse(__version__):
+                    print("new update is available")
+                else:
+                    print("NO updates available")
+        else:
+            print("No releases")
 
 
 if __name__ == "__main__":

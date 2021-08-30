@@ -50,6 +50,10 @@ fi
 
 cp squashfs-root/usr/share/icons/hicolor/128x128/apps/$icon_name.png squashfs-root/
 
+# Add AppImageUpdate inside the AppImage itself
+wget https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage -O squashfs-root/usr/bin/appimageupdate
+chmod +x squashfs-root/usr/bin/appimageupdate
+
 # TODO: try to trim files from the image to reduce size of appimage
 
 
