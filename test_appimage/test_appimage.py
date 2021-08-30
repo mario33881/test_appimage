@@ -11,7 +11,7 @@ from email.message import Message
 from packaging import version
 
 release_url = "https://api.github.com/repos/mario33881/test_appimage/releases/latest"
-__version__ = "1.2.0"
+__version__ = "1.3.0"
 
 
 class Response(typing.NamedTuple):
@@ -94,7 +94,7 @@ def request(
 
 def main():
     args = sys.argv
-    if len(args) == 1:
+    if len(args) == 2:
         if sys.argv[1] == "--update":
             print("looking for updates")
             try:
