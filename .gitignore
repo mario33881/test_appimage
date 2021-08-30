@@ -1,2 +1,6 @@
 *.AppImage
 squashfs-root/
+*.egg-info/
+build/
+dist/
+*/__pycache__/

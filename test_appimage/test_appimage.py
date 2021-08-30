@@ -87,19 +87,27 @@ def request(
     return response
 
 
-if __name__ == "__main__":
+def main():
     print("Currently using version ", __version__)
     req = request(release_url)
     json_data = req.json()
     version = None
-    for asset in json_data["assets"]:
-        if asset["name"] == "version.txt":
-            target_url = asset["url"]
-            for line in urllib.request.urlopen(target_url):
-                version = line.decode('utf-8').strip()
-                break
 
-    if version is not None:
-        print("latest version:", version)
-        if version != __version__:
-            print("new update is available")
+    if not isinstance(json_data, str):
+        for asset in json_data["assets"]:
+            if asset["name"] == "version.txt":
+                target_url = asset["url"]
+                for line in urllib.request.urlopen(target_url):
+                    version = line.decode('utf-8').strip()
+                    break
+
+        if version is not None:
+            print("latest version:", version)
+            if version != __version__:
+                print("new update is available")
+    else:
+        print("No releases")
+
+
+if __name__ == "__main__":
+    main()

@@ -34,6 +34,9 @@ if __name__ == '__main__':
         author_email="mariortgasd@hotmail.com",
         url="https://github.com/mario33881/test_appimage",
         keywords='',
+        entry_points={
+            "console_scripts": ["test_appimage = test_appimage.test_appimage:main"]
+        },
         license='MIT',
         description='An AppImageUpdate test',
         long_description=get_readme(),
