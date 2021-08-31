@@ -102,8 +102,8 @@ def main():
                 print("path environment variable: ", os.environ["PATH"])
             try:
                 if "APPIMAGE" in os.environ and "APPDIR" in os.environ:
-                    aiut_path = os.path.join(os.environ["APPDIR"], "usr", "bin")
-                    aiut_executable = os.path.join(aiut_path, "appimageupdate")
+                    aiut_path = os.path.join(os.environ["APPDIR"], "appimageupdate")
+                    aiut_executable = os.path.join(aiut_path, "AppRun")
                     print("{} contains these files:".format(os.environ["APPDIR"]))
                     for file in os.listdir(os.environ["APPDIR"]):
                         print(file)
