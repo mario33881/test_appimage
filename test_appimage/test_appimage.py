@@ -1,3 +1,4 @@
+import os
 import sys
 import subprocess
 
@@ -98,7 +99,12 @@ def main():
         if sys.argv[1] == "--update":
             print("looking for updates")
             try:
-                subprocess.Popen(["appimageupdate", "$APPIMAGE"], shell=True)
+                if "APPIMAGE" in os.environ and "APPDIR" in os.environ:
+                    aiut_path = os.path.join(os.environ["APPDIR"], "usr", "bin", "appimageupdate")
+                    print("Executing '{}' on '{}'", aiut_path, os.environ["APPIMAGE"])
+                    subprocess.Popen([aiut_path, os.environ["APPIMAGE"]], shell=True)
+                else:
+                    print("Can't check for updates: it looks like you didn't build the appimage yet")
             except Exception as e:
                 print("Something went wrong:", e)
         else:
