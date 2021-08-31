@@ -101,8 +101,8 @@ def main():
             try:
                 if "APPIMAGE" in os.environ and "APPDIR" in os.environ:
                     aiut_path = os.path.join(os.environ["APPDIR"], "usr", "bin", "appimageupdate")
-                    print("Executing '{}' on '{}'", aiut_path, os.environ["APPIMAGE"])
-                    subprocess.Popen([aiut_path, os.environ["APPIMAGE"]], shell=True)
+                    print("Executing '{}' on '{}'".format(aiut_path, os.environ["APPIMAGE"]))
+                    subprocess.Popen([aiut_path, os.environ["APPIMAGE"]])
                 else:
                     print("Can't check for updates: it looks like you didn't build the appimage yet")
             except Exception as e:
