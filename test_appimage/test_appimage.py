@@ -100,7 +100,7 @@ def main():
             print("looking for updates")
             try:
                 if "APPIMAGE" in os.environ and "APPDIR" in os.environ:
-                    aiut_path = os.path.join(os.environ["APPDIR"], "usr", "bin", "appimageupdate")
+                    aiut_path = os.path.join(os.environ["APPDIR"], "usr", "bin")
                     aiut_executable = os.path.join(aiut_path, "appimageupdate")
                     print("{} contains these files:".format(os.environ["APPDIR"]))
                     for file in os.listdir(os.environ["APPDIR"]):
