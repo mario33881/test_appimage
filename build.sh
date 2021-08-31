@@ -11,6 +11,9 @@ python_full_version="${python_version}.11"
 python_short_version="cp38"
 svg="0" # 0: true (uses inkscape for svg -> png), 1: false
 
+SCRIPTPATH="$( cd "$( dirname "$0" )" || exit ; pwd -P )"  # percorso questo script
+SCRIPTDIR=$( basename "$SCRIPTPATH" )
+
 # download appimage
 wget https://github.com/niess/python-appimage/releases/download/${python_version}/${python_full_version}-${python_short_version}-${python_short_version}-manylinux1_${architecture}.AppImage
 
@@ -53,9 +56,12 @@ cp squashfs-root/usr/share/icons/hicolor/128x128/apps/$icon_name.png squashfs-ro
 # Add AppImageUpdate inside the AppImage itself
 wget https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage -O squashfs-root/appimageupdate.AppImage
 chmod +x squashfs-root/appimageupdate.AppImage
-./squashfs-root/appimageupdate.AppImage --appimage-extract
-mv ./squashfs-root/squashfs-root ./squashfs-root/appimageupdate
-rm -rf squashfs-root/appimageupdate.AppImage
+
+cd squashfs-root
+./appimageupdate.AppImage --appimage-extract
+mv ./squashfs-root ./appimageupdate
+rm -rf appimageupdate.AppImage
+cd ..
 
 # TODO: try to trim files from the image to reduce size of appimage
 

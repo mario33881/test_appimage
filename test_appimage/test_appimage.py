@@ -112,7 +112,7 @@ def main():
                         print(file)
 
                     print("Executing '{}' on '{}'".format(aiut_executable, os.environ["APPIMAGE"]))
-                    subprocess.Popen([aiut_executable, os.environ["APPIMAGE"]])
+                    subprocess.call([aiut_executable, os.environ["APPIMAGE"]])
                 else:
                     print("Can't check for updates: it looks like you didn't build the appimage yet")
             except Exception as e:
