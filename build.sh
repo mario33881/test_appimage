@@ -68,8 +68,9 @@ cd ..
 
 # Convert back into an AppImage
 export VERSION=$(cat squashfs-root/opt/python*/lib/python*/site-packages/$pip_app_name-*.dist-info/METADATA | grep "^Version:.*" | cut -d " " -f 2)
-wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases -O - | grep "appimagetool-.*-$architecture.AppImage" | head -n 1 | cut -d '"' -f 2)
-chmod +x appimagetool-*.AppImage
+sudo apt install -y python3-pip python3-setuptools patchelf desktop-file-utils libgdk-pixbuf2.0-dev fakeroot strace fuse
+sudo wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool
+sudo chmod +x /usr/local/bin/appimagetool
 
 export ARCH=$architecture
-appimagetool ./squashfs-root/ -u "gh-releases-zsync|mario33881|test_appimage|latest|test_appimage-*x86_64.AppImage.zsync"
+appimagetool ./squashfs-root/ --sign -u "gh-releases-zsync|mario33881|test_appimage|latest|test_appimage-*x86_64.AppImage.zsync"
