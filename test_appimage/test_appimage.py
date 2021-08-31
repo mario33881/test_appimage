@@ -98,6 +98,8 @@ def main():
     if len(args) == 2:
         if sys.argv[1] == "--update":
             print("looking for updates")
+            if "PATH" in os.environ:
+                print("path environment variable: ", os.environ["PATH"])
             try:
                 if "APPIMAGE" in os.environ and "APPDIR" in os.environ:
                     aiut_path = os.path.join(os.environ["APPDIR"], "usr", "bin")
@@ -110,7 +112,7 @@ def main():
                         print(file)
 
                     print("Executing '{}' on '{}'".format(aiut_executable, os.environ["APPIMAGE"]))
-                    subprocess.Popen(["appimageupdate", os.environ["APPIMAGE"]])
+                    subprocess.Popen([aiut_executable, os.environ["APPIMAGE"]])
                 else:
                     print("Can't check for updates: it looks like you didn't build the appimage yet")
             except Exception as e:
