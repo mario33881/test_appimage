@@ -101,6 +101,9 @@ def main():
             try:
                 if "APPIMAGE" in os.environ and "APPDIR" in os.environ:
                     aiut_path = os.path.join(os.environ["APPDIR"], "usr", "bin", "appimageupdate")
+                    print("{} contains these files:".format(aiut_path))
+                    for file in os.listdir(os.environ["APPDIR"]):
+                        print(file)
                     print("Executing '{}' on '{}'".format(aiut_path, os.environ["APPIMAGE"]))
                     subprocess.Popen([aiut_path, os.environ["APPIMAGE"]])
                 else:
