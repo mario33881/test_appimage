@@ -1,3 +1,9 @@
+"""
+This is a very simple application:
+* shows the current version number, the latest version number and shows if the latest release is a new release.
+* it checks if the latest Github Release contains a newer version by checking the version.txt file of the release
+* if the user calls the appimage file with --update the app downloads the latest version
+"""
 import os
 import sys
 import subprocess
@@ -12,7 +18,7 @@ from email.message import Message
 from packaging import version
 
 release_url = "https://api.github.com/repos/mario33881/test_appimage/releases/latest"
-__version__ = "1.3.0"
+__version__ = "1.4.0"
 
 
 class Response(typing.NamedTuple):
@@ -94,6 +100,13 @@ def request(
 
 
 def main():
+    """
+    Checks the number of parameters and updates 
+    the AppImage if called with "--update".
+    
+    If no/too many parameters are passed to the script, 
+    the script shows the current and latest version.
+    """
     args = sys.argv
     if len(args) == 2:
         if sys.argv[1] == "--update":
